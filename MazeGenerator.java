@@ -4,10 +4,11 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 public class MazeGenerator {
 
-	public static byte[][] generateRandomMazeByteMap(int height, int width) {
+	private static byte[][] generateRandomMazeByteMap(int height, int width, int density) {
 		//the byteMap to be returned
 		byte[][] pixels = new byte[height][width];
 		
@@ -56,9 +57,10 @@ public class MazeGenerator {
 		
 		Collections.shuffle(walls);
 		Wall wall;
+		Random random = new Random();
 		for (Iterator<Wall> iter = walls.iterator(); iter.hasNext();) {
 			wall = iter.next();
-			if (uf.find(wall.x) != uf.find(wall.y)) {
+			if (uf.find(wall.x) != uf.find(wall.y) || random.nextInt(100) >= density) {
 				uf.union(wall.x, wall.y);
 				iter.remove();
 				int x = (wall.x.getInfo().position[0] + wall.y.getInfo().position[0]) / 2;
@@ -83,8 +85,32 @@ public class MazeGenerator {
 		}
 		return bi;
 	}
-	
-	public static BufferedImage generateRandomMazeImage(int height, int width) {
-		return generateImageFromByteMap(generateRandomMazeByteMap(height, width));
+	/**
+	 * Generates an image of a perfect maze.
+	 * Only one solution, every point of the maze can be reached.
+	 * @param height
+	 * The height of the image to be returned.
+	 * @param width
+	 * The width of the image to be returned.
+	 * @return
+	 * A BufferedImage of the maze, image type: TYPE_BYTE_GRAY.
+	 */
+	public static BufferedImage generateRandomtMazeImage(int height, int width) {
+		return generateImageFromByteMap(generateRandomMazeByteMap(height, width, 100));
+	}
+	/**
+	 * Generates an image of a multi-path maze.
+	 * Multiple solutions, a perfect maze from which random walls were removed.
+	 * @param height
+	 * The height of the image to be returned.
+	 * @param width
+	 * The width of the image to be returned.
+	 * @param density
+	 * An integer between 0-100 representing the density of the maze, 100 being a perfect maze. 
+	 * @return
+	 * A BufferedImage of the maze, image type: TYPE_BYTE_GRAY. 
+	 */
+	public static BufferedImage generateRandomtMazeImage(int height, int width, int density) {
+		return generateImageFromByteMap(generateRandomMazeByteMap(height, width, density));
 	}
 }
