@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class MazeGenerator {
 
-	private static byte[][] generateRandomMazeByteMap(int height, int width, int density) {
+	public static byte[][] generateRandomMazeByteMap(int height, int width, int density) {
 		//the byteMap to be returned
 		byte[][] pixels = new byte[height][width];
 		

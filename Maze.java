@@ -1,10 +1,6 @@
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
-
-import javax.imageio.ImageIO;
 
 public class Maze {
 	MazeNode start;
@@ -32,7 +28,8 @@ public class Maze {
 	}
 
 	public Maze() {
-
+		this.start = null;
+		this.end = null;
 	}
 
 	public Maze(BufferedImage bi) {
@@ -162,25 +159,6 @@ public class Maze {
 				}
 			}
 			prev = cur;
-		}
-	}
-
-	public static void main(String[] args) {
-		BufferedImage bi = MazeGenerator.generateRandomtMazeImage(1151,1201, 98);
-		try {
-			ImageIO.write(bi, "jpg", new File("Maze.jpg"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Maze maze = new Maze(bi);
-		maze.drawRoute(bi, maze.solve(), (byte)110);
-		maze.drawRoute(bi, maze.solve(new DijkstraSolver()), (byte)150);
-		try {
-			ImageIO.write(bi, "jpg", new File("Solution.jpg"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 }
