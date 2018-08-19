@@ -7,4 +7,4 @@ Used to generate random maze images. To create a random perfect maze (A maze wit
 To generate a multi-path maze, some inner walls are removed at random.
 
 example of a 151 x 221 pixels maze:
-<img src="img/example-maze.jpg">
+<img src="img/example-maze.JPG">
